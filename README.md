@@ -32,8 +32,8 @@ docker run -it -p 8080:8080 -e APP_ENV=default -e API_URL=http://localhost:8080 
 
 ### Request to local
 ```
-curl http://localhost:8080/a | jq
-curl -Htrack:foo http://localhost:8080/a | jq
+curl -s http://localhost:8080/a | jq
+curl -s -Htrack:foo http://localhost:8080/a | jq
 ```
 
 ### Push
@@ -51,3 +51,20 @@ Mac OS: `curl -O https://app.harness.io/public/shared/tools/go-template/release/
 Linux: `curl -O https://app.harness.io/public/shared/tools/go-template/release/v0.3/bin/linux/amd64/go-template`
 
 Windows: `curl -O https://app.harness.io/public/shared/tools/go-template/release/v0.3/bin/windows/amd64/go-template`
+
+First use track `primary`, version `v1`, for each of `a`, `b`, and `c` service.
+
+Apply each of the processed manifests with `kubectl`, change values, process again, and repeat.
+
+After primary is deployed for a, b, and c you should be able to deploy v2 of just `b` with a custom track header.
+
+### Request from Istio endpoint
+
+```
+curl -s http://<istio-endpoint>/a | jq
+curl -s -Htrack:primary http://<istio-endpoint>/a | jq
+curl -s -Htrack:custom http://<istio-endpoint>/a | jq
+```
+
+The first two should return payloads for a, b, and c all with v1.
+The third should return primary (v1) for a and c, but custom (v2) for b in the payload chain.
