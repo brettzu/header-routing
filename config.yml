@@ -1,0 +1,3 @@
+service: a
+version: v1
+nextService: b
