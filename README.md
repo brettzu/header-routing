@@ -34,8 +34,8 @@ docker run -it -p 8080:8080 -e APP_ENV=default -e API_URL=http://localhost:8080 
 
 ### Request to local
 ```
-curl -s http://localhost:8080/a | jq
-curl -s -Htrack:foo http://localhost:8080/a | jq
+curl -s http://localhost:8080/rpc | jq
+curl -s -Htrack:foo http://localhost:8080/rpc | jq
 ```
 
 ### Push
