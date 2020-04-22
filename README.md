@@ -70,3 +70,9 @@ curl -s -Htrack:custom http://<istio-endpoint>/a | jq
 
 The first two should return payloads for `a`, `b`, and `c` all with `v1`.
 The third should return primary (`v1`) for `a` and `c`, but custom (`v2`) for `b` in the payload chain.
+
+### Check routes to pod
+
+```
+istioctl -n <namespace> x describe pod <pod-id>
+```
