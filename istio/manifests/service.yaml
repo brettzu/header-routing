@@ -13,3 +13,47 @@ spec:
     targetPort: http
   selector:
     app: {{.Values.name}}
+---
+
+{{- if .Values.createVirtualService}}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{.Values.name}}
+  labels:
+    app: {{.Values.name}}
+    group: multiservice
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - multiservice
+  http:
+  - name: primary
+    match:
+    - uri:
+        exact: /{{.Values.endpoint}}
+    rewrite:
+      uri: /rpc
+    route:
+    - destination:
+        host: {{.Values.name}}
+        subset: {{.Values.name}}-primary
+---
+{{- end}}
+
+{{- if .Values.createDestinationRule}}
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{.Values.name}}
+  labels:
+    app: {{.Values.name}}
+    group: multiservice
+spec:
+  host: {{.Values.name}}
+  subsets:
+  - name: {{.Values.name}}-primary
+    labels:
+      track: primary
+{{- end}}
