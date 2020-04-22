@@ -1,0 +1,13 @@
+namespace: ${infra.kubernetes.namespace}
+apiUrl: http://${serviceVariable.host}
+replicas: 1
+
+name: ${serviceVariable.name}
+image: ${artifact.metadata.image}
+version: ${artifact.metadata.tag}
+track: ${workflow.variables.track}
+endpoint: ${serviceVariable.endpoint}
+appEnv: ${workflow.variables.appEnv}
+
+createVirtualService: ${create.virtualService}
+createDestinationRule: ${create.destinationRule}
