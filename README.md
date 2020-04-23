@@ -74,5 +74,5 @@ The third should return primary (`v1`) for `a` and `c`, but custom (`v2`) for `b
 ### Check routes to pod
 
 ```
-istioctl -n <namespace> x describe pod <pod-id>
+istioctl -n <namespace> x describe pod <pod-name>
 ```
