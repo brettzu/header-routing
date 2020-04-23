@@ -11,7 +11,7 @@ else
   fi
 
   subset_list=$(kubectl get destinationrule -n ${infra.kubernetes.namespace} ${serviceVariable.name} -o jsonpath='{.spec.subsets[*].name}')
-  if [[ $subset_list =~ (^|[[:space:]])$dr-${workflow.variables.track}($|[[:space:]]) ]]; then
+  if [[ $subset_list =~ (^|[[:space:]])${serviceVariable.name}-${workflow.variables.track}($|[[:space:]]) ]]; then
     echo DestinationRule ${serviceVariable.name} already contains track ${workflow.variables.track}
   else
     kubectl patch destinationrule -n ${infra.kubernetes.namespace} ${serviceVariable.name} --type=json -p '[{"op":"add","path":"/spec/subsets/0","value":{"name":"${serviceVariable.name}-${workflow.variables.track}","labels":{"track":"${workflow.variables.track}"}}}]'
