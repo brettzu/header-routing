@@ -8,7 +8,7 @@ spec:
   type: ClusterIP
   ports:
   - name: http
-    port: 9080
+    port: {{.Values.port}}
     protocol: TCP
     targetPort: http
   selector:
@@ -22,12 +22,14 @@ metadata:
   name: {{.Values.name}}
   labels:
     app: {{.Values.name}}
-    group: multiservice
+    group: {{.Values.group}}
 spec:
   hosts:
-  - "*"
+  - {{.Values.name}}
+  - {{.Values.host}}
   gateways:
-  - multiservice
+  - ingressgateway.istio-system.svc.cluster.local
+  - mesh
   http:
   - name: primary
     match:
@@ -49,7 +51,7 @@ metadata:
   name: {{.Values.name}}
   labels:
     app: {{.Values.name}}
-    group: multiservice
+    group: {{.Values.group}}
 spec:
   host: {{.Values.name}}
   subsets:

@@ -1,8 +1,10 @@
 namespace: ${infra.kubernetes.namespace}
-apiUrl: http://${serviceVariable.host}
 replicas: 1
 
 name: ${serviceVariable.name}
+group: ${serviceVariable.group}
+host: ${serviceVariable.host}
+port: ${serviceVariable.port}
 image: ${artifact.metadata.image}
 version: ${artifact.metadata.tag}
 track: ${workflow.variables.track}
