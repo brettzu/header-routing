@@ -76,3 +76,9 @@ The third should return primary (`v1`) for `a` and `c`, but custom (`v2`) for `b
 ```
 istioctl -n <namespace> x describe pod <pod-name>
 ```
+
+### If istio-ca-root-cert configMap is missing from a new namespace
+
+```
+kubectl -n istio-system rollout restart deployment istiod
+```
