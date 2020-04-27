@@ -29,7 +29,7 @@ docker build -t <your-repo>/multiservice/c:v3 -f Dockerfile .
 
 ### Run locally 
 ```
-docker run -it -p 8080:8080 -e APP_ENV=default -e API_URL=http://localhost:8080 <your-repo>/multiservice/a:v1
+docker run -it -p 8080:8080 -e APP_ENV=default <your-repo>/multiservice/a:v1
 ```
 
 ### Request to local
